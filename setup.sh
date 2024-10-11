@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+
 # Config pacman
    sudo pacman -Syyu
 
@@ -27,16 +28,50 @@
    sudo ufw enable
    sudo systemctl enable ufw.service
    sudo ufw status verbose
+   sudo pacman -S less
 
 # Config Git
    git config --global init.defaultBranch <name>
    git config --global user.email "vcladara@gmail.com"
    git config --global user.name "Victor Eduardo"
 
+# Config Rofi theme
+   cd ~
+   sudo pacman -S rofi
+   git clone --depth=1 https://github.com/adi1090x/rofi.git
+   cd rofi
+   chmod +x setup.sh
+   ./setup.sh
+
+   cp launcher.sh .config/rofi/launchers/type-6/
+   
+# set wallpaper
+   sudo pacman -S feh
+   cp maxresdefault.jpg Pictures/
+   feh --bg-scale Pictures/maxresdefault.jpg
+
+# Config poybar
+   sudo pacman -S polybar
+   sudo yay -S networkmanager-dmenu-git
+   sudo yay -S pywal
+   sudo pacman -S calc
+
+   # install themes
+      git clone --depth=1 https://github.com/adi1090x/polybar-themes.git
+      cd polybar-themes
+      chmod +x setup.sh
+      /setup.sh
+      cp -r forest ~/.config/polybar
+
 # Config GRUB
-  sudo mv grub /etc/default/
+  sudo cp grub /etc/default/
   sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # move file configuration
-   sudo mv 30-touchpad.conf /etc/X11/xorg.conf.d/
-   sudo mv pacman.conf /etc/
+   sudo cp 30-touchpad.conf /etc/X11/xorg.conf.d/
+   sudo cp pacman.conf /etc/
+   sudo cp i3wm/config .config/i3/
+
+# INstall programs 
+   sudo pacman -S geany
+   sudo pacman -S thunar
